@@ -11,7 +11,6 @@
 	$obj = json_decode($json);
 
 	echo "$json";
-        echo "$obj"; 
 
 ?>
 </ol>
