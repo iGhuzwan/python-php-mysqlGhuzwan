@@ -8,15 +8,12 @@
 <ol>
 <?php
 	$json = file_get_contents("http://dotcode.ml:3001/");
-	echo "<li>$json</li>";
+	echo "Received from Python as JSON in PHP front-end";
+        echo "<li>$json</li>";
         $obj = json_decode($json);
-        echo "<li>$obj</li>";
-        $products = $obj;
-
-	foreach ($products as $product){
-		echo "<li>$product</li>";
-	}
-
+	echo "After JSON decode in PHP front-end";
+        echo $obj->name;
+	echo $obj->address;
 ?>
 </ol>
 </body>
