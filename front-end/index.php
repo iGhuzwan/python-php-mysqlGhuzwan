@@ -8,9 +8,14 @@
 <ol>
 <?php
 	$json = file_get_contents("http://dotcode.ml:3001/");
-	$obj = json_decode($json);
+	echo "<li>$json</li>";
+        $obj = json_decode($json);
+        echo "<li>$obj</li>";
+        $products = $obj;
 
-	echo "$json";
+	foreach ($products as $product){
+		echo "<li>$product</li>";
+	}
 
 ?>
 </ol>
