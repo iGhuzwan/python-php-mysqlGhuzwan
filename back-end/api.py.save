@@ -1,0 +1,45 @@
+from flask import Flask, jsonify
+from flask_restful import Resource, Api
+from typing import List, Dict
+import mysql.connector
+import mariadb
+import psycopg2
+import sys
+import json
+
+app = Flask(__name__)
+
+api = Api(app)
+
+# Instantiate Connection
+try:
+   conn = mariadb.connect(
+      user="admin",
+      password="laly7792420",
+      host="clouddbmaria.cxa0uufajue5.us-east-1.rds.amazonaws.com",
+      port=3306,
+      database="ghuzwandb"
+	)
+except mariadb.Error as e:
+   print(f"Error connecting to MariaDB Platform: {e}")
+   sys.exit(1)
+
+# Instantiate Cursor
+cur = conn.cursor()
+cur.execute("Select * from customers")
+
+row_headers=[x[0] for x in cur.description]
+myresult = cur.fetchall()
+json_data=[]
+for result in myresult:
+     json_data.append(dict(zip(row_headers,result)))
+conn.close()
+
+class Product(Resource):
+	def get(self):
+		return jsonify(json_data)
+
+api.add_resource(Product,'/')
+api.add_resource(maraibd,'/mariadb')
+if __name__ == '__main__':
+	app.run(host='0.0.0.0',port=80, debug=True)
